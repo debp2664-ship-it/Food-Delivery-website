@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Menu & Order | CraveNest</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container navbar">
+      <button class="mobile-menu-toggle" id="open-drawer-btn" aria-label="Open Navigation Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+        <div class="brand-name">Crave<span>Nest</span></div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="restaurants.html" class="nav-link">Restaurants</a></li>
+          <li><a href="cart.html" class="nav-link">Cart</a></li>
+          <li><a href="orders.html" class="nav-link">Track Order</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="cart.html" class="cart-btn" id="nav-cart-btn">
+          <i class="fas fa-shopping-basket"></i>
+          <span>Cart</span>
+          <span class="cart-badge" id="nav-cart-badge">0</span>
+        </a>
+        <div id="navbar-auth-container"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-overlay" id="mobile-drawer-overlay"></div>
+  <aside class="mobile-nav-drawer" id="mobile-drawer">
+    <div class="drawer-header">
+      <div class="brand-logo">
+        <div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+        <div class="brand-name">Crave<span>Nest</span></div>
+      </div>
+      <button id="close-drawer-btn"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="drawer-links">
+      <li><a href="index.html" class="drawer-link"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="restaurants.html" class="drawer-link"><i class="fas fa-store"></i> All Restaurants</a></li>
+      <li><a href="cart.html" class="drawer-link"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      <li><a href="orders.html" class="drawer-link"><i class="fas fa-receipt"></i> Orders</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Restaurant Container -->
+  <main class="container section-padding" style="padding-top: 24px;">
+    <!-- Breadcrumbs -->
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px;">
+      <a href="index.html" style="color: inherit;">Home</a> / 
+      <a href="restaurants.html" style="color: inherit;">Restaurants</a> / 
+      <span style="color: var(--text-primary); font-weight: 700;">Menu</span>
+    </div>
+
+    <!-- Restaurant Hero Banner -->
+    <div id="restaurant-hero-banner" style="margin-bottom: 32px;">
+      <!-- Loaded dynamically via food.js -->
+      <div class="skeleton-card" style="height: 340px;"><div class="skeleton-shimmer"></div></div>
+    </div>
+
+    <!-- Menu Sticky Filter Bar -->
+    <div style="background: white; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 14px 20px; margin-bottom: 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 86px; z-index: 50; box-shadow: var(--shadow-sm);">
+      <!-- Category Tabs (Horizontal Scrollable) -->
+      <div style="display: flex; align-items: center; gap: 8px; overflow-x: auto; max-width: 70%; scrollbar-width: none;">
+        <button class="menu-category-tab active" data-category="All" style="padding: 7px 16px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.82rem; background: var(--secondary); color: white; white-space: nowrap;">All</button>
+        <button class="menu-category-tab" data-category="Recommended" style="padding: 7px 16px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.82rem; background: var(--bg-subtle); color: var(--text-secondary); white-space: nowrap;">Recommended</button>
+        <button class="menu-category-tab" data-category="Starters" style="padding: 7px 16px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.82rem; background: var(--bg-subtle); color: var(--text-secondary); white-space: nowrap;">Starters</button>
+        <button class="menu-category-tab" data-category="Main Course" style="padding: 7px 16px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.82rem; background: var(--bg-subtle); color: var(--text-secondary); white-space: nowrap;">Main Course</button>
+        <button class="menu-category-tab" data-category="Biryani" style="padding: 7px 16px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.82rem; background: var(--bg-subtle); color: var(--text-secondary); white-space: nowrap;">Biryani</button>
+        <button class="menu-category-tab" data-category="Rice" style="padding: 7px 16px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.82rem; background: var(--bg-subtle); color: var(--text-secondary); white-space: nowrap;">Rice</button>
+        <button class="menu-category-tab" data-category="Drinks" style="padding: 7px 16px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.82rem; background: var(--bg-subtle); color: var(--text-secondary); white-space: nowrap;">Drinks</button>
+        <button class="menu-category-tab" data-category="Desserts" style="padding: 7px 16px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.82rem; background: var(--bg-subtle); color: var(--text-secondary); white-space: nowrap;">Desserts</button>
+      </div>
+
+      <!-- Right Controls: Veg Filter & Search -->
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <label style="display: flex; align-items: center; gap: 6px; font-size: 0.88rem; font-weight: 700; cursor: pointer; color: var(--veg-color);">
+          <input type="checkbox" id="menu-veg-toggle" style="width: 16px; height: 16px; accent-color: var(--veg-color);">
+          <span>Veg Only</span>
+        </label>
+        <div style="display: flex; align-items: center; gap: 8px; background: var(--bg-subtle); padding: 6px 14px; border-radius: var(--radius-full); border: 1px solid var(--border-color);">
+          <i class="fas fa-search" style="color: var(--text-muted); font-size: 0.8rem;"></i>
+          <input type="text" id="menu-search-input" placeholder="Search menu..." style="border: none; background: transparent; font-size: 0.85rem; width: 120px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Categorized Menu Items Container -->
+    <div id="menu-items-container">
+      <!-- Loaded dynamically via food.js -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div>© 2026 CraveNest Technologies Inc. All rights reserved.</div>
+      <a href="cart.html" style="color: var(--primary); font-weight: 700;">Proceed to Cart →</a>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/food.js"></script>
+</body>
+</html>

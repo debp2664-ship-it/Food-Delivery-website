@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Checkout | CraveNest</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+        <div class="brand-name">Crave<span>Nest</span></div>
+      </a>
+
+      <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-shield-alt" style="color: var(--accent-emerald);"></i> 100% Secure Checkout
+      </div>
+
+      <div class="nav-actions">
+        <a href="cart.html" style="font-size: 0.9rem; font-weight: 700; color: var(--text-secondary);">
+          <i class="fas fa-chevron-left" style="margin-right: 4px;"></i> Return to Cart
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Checkout Content -->
+  <main class="container section-padding" style="padding-top: 32px;">
+    <div class="section-header">
+      <span class="subtitle">Step 2 of 2</span>
+      <h1 class="title">Delivery & Payment</h1>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.35fr 0.85fr; gap: 32px; align-items: start;">
+      <!-- Left Column: Address & Payment Selection -->
+      <div style="display: flex; flex-direction: column; gap: 28px;">
+        <!-- 1. Delivery Address Card -->
+        <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 24px; box-shadow: var(--shadow-sm);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px;">
+            <h3 style="font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 10px;">
+              <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">1</span>
+              Delivery Address
+            </h3>
+            <button id="add-new-address-btn" class="btn-secondary" style="padding: 7px 16px; font-size: 0.85rem;">
+              <i class="fas fa-plus"></i> Add New Address
+            </button>
+          </div>
+
+          <!-- Saved Address List -->
+          <div id="saved-addresses-list">
+            <!-- Dynamically populated via checkout.js -->
+          </div>
+
+          <!-- Delivery Instructions Note -->
+          <div style="margin-top: 18px;">
+            <label for="delivery-instructions" style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 6px;">
+              Delivery Instructions (Optional):
+            </label>
+            <input type="text" id="delivery-instructions" placeholder="e.g. Please ring doorbell once, leave with guard, call upon arrival" style="width: 100%; padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.88rem;">
+          </div>
+        </div>
+
+        <!-- 2. Payment Method Card -->
+        <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 24px; box-shadow: var(--shadow-sm);">
+          <h3 style="font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
+            <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">2</span>
+            Payment Method
+          </h3>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 20px;">
+            <!-- COD -->
+            <div class="payment-option-card active" data-method="Cash on Delivery" style="border: 2px solid var(--primary); background: #FFF8F6; border-radius: var(--radius-md); padding: 16px; cursor: pointer; display: flex; align-items: center; gap: 12px;">
+              <i class="fas fa-money-bill-wave" style="font-size: 1.5rem; color: #16A34A;"></i>
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem;">Cash on Delivery</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Pay cash/UPI at door</div>
+              </div>
+            </div>
+
+            <!-- UPI -->
+            <div class="payment-option-card" data-method="UPI" style="border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; cursor: pointer; display: flex; align-items: center; gap: 12px;">
+              <i class="fas fa-qrcode" style="font-size: 1.5rem; color: #0284C7;"></i>
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem;">UPI / QR Code</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">GPay, PhonePe, Paytm</div>
+              </div>
+            </div>
+
+            <!-- Card -->
+            <div class="payment-option-card" data-method="Card" style="border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; cursor: pointer; display: flex; align-items: center; gap: 12px;">
+              <i class="fas fa-credit-card" style="font-size: 1.5rem; color: #8B5CF6;"></i>
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem;">Credit / Debit Card</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Visa, Mastercard, RuPay</div>
+              </div>
+            </div>
+
+            <!-- Online Banking -->
+            <div class="payment-option-card" data-method="Online Payment" style="border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; cursor: pointer; display: flex; align-items: center; gap: 12px;">
+              <i class="fas fa-university" style="font-size: 1.5rem; color: #D97706;"></i>
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem;">Net Banking</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">All major Indian banks</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulated UPI details box -->
+          <div id="simulated-upi-wrap" style="display: none; background: var(--bg-subtle); padding: 16px; border-radius: var(--radius-md); margin-top: 14px;">
+            <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Enter UPI Virtual ID (VPA):</label>
+            <input type="text" placeholder="example@okhdfcbank" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); font-size: 0.88rem;" value="foodie@upi">
+            <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 4px;">(Demo simulation: Instant approval)</span>
+          </div>
+
+          <!-- Simulated Card details box -->
+          <div id="simulated-card-wrap" style="display: none; background: var(--bg-subtle); padding: 16px; border-radius: var(--radius-md); margin-top: 14px;">
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
+              <div>
+                <label style="font-size: 0.8rem; font-weight: 700; display: block; margin-bottom: 4px;">Card Number</label>
+                <input type="text" placeholder="4111 2222 3333 4444" style="width: 100%; padding: 8px; border-radius: var(--radius-sm);" value="4111 2222 3333 4444">
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; font-weight: 700; display: block; margin-bottom: 4px;">Expiry</label>
+                <input type="text" placeholder="MM/YY" style="width: 100%; padding: 8px; border-radius: var(--radius-sm);" value="12/28">
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; font-weight: 700; display: block; margin-bottom: 4px;">CVV</label>
+                <input type="password" placeholder="123" style="width: 100%; padding: 8px; border-radius: var(--radius-sm);" value="789">
+              </div>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 6px;">(Demo simulation: Instant encrypted verification)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Summary & Place Order CTA -->
+      <div>
+        <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 24px; box-shadow: var(--shadow-sm); position: sticky; top: 96px;">
+          <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 16px;">Order Summary</h3>
+
+          <!-- Items list -->
+          <div id="checkout-items-list" style="margin-bottom: 18px; max-height: 220px; overflow-y: auto;">
+            <!-- Populated via checkout.js -->
+          </div>
+
+          <!-- Bill calculations -->
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); padding-top: 14px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Subtotal</span>
+              <span id="checkout-subtotal" style="font-weight: 700; color: var(--text-primary);">₹0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Delivery Fee</span>
+              <span id="checkout-delivery-fee" style="font-weight: 700; color: var(--text-primary);">₹30</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Taxes (5% GST)</span>
+              <span id="checkout-tax" style="font-weight: 700; color: var(--text-primary);">₹0</span>
+            </div>
+            <div id="checkout-discount-row" style="display: none; justify-content: space-between; color: var(--accent-emerald); font-weight: 700;">
+              <span>Coupon Discount</span>
+              <span id="checkout-discount">- ₹0</span>
+            </div>
+          </div>
+
+          <!-- Final Total -->
+          <div style="display: flex; justify-content: space-between; align-items: baseline; font-weight: 800; font-size: 1.35rem; color: var(--text-primary); border-top: 1px solid var(--border-color); padding-top: 14px; margin-bottom: 24px;">
+            <span>Grand Total</span>
+            <span id="checkout-final-total" style="color: var(--primary);">₹0</span>
+          </div>
+
+          <button id="place-order-btn" class="btn-primary" style="width: 100%; padding: 14px; font-size: 1rem; border-radius: var(--radius-md);">
+            Place Order Now <i class="fas fa-check-circle" style="margin-left: 6px;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add New Address Modal -->
+  <div class="modal-backdrop" id="address-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-plus-circle" style="color: var(--primary);"></i> Add Delivery Address</h3>
+        <button class="modal-close-btn" id="close-address-modal"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="new-address-form">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 4px;">Recipient Name *</label>
+            <input type="text" id="addr-name" required placeholder="e.g. Aarav Sharma" style="width: 100%; padding: 10px; border-radius: var(--radius-sm);">
+          </div>
+          <div>
+            <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 4px;">Phone Number *</label>
+            <input type="tel" id="addr-phone" required placeholder="e.g. +91 98301 23456" style="width: 100%; padding: 10px; border-radius: var(--radius-sm);">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 4px;">Flat / House / Floor *</label>
+              <input type="text" id="addr-house" required placeholder="Flat 4B, Tower 2" style="width: 100%; padding: 10px; border-radius: var(--radius-sm);">
+            </div>
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 4px;">Street / Building *</label>
+              <input type="text" id="addr-street" required placeholder="Greenfield Heights" style="width: 100%; padding: 10px; border-radius: var(--radius-sm);">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 4px;">Area / Locality *</label>
+              <input type="text" id="addr-area" required placeholder="New Town Action Area 1" style="width: 100%; padding: 10px; border-radius: var(--radius-sm);">
+            </div>
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 4px;">PIN Code *</label>
+              <input type="text" id="addr-pincode" required placeholder="700156" style="width: 100%; padding: 10px; border-radius: var(--radius-sm);">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 4px;">City</label>
+              <input type="text" id="addr-city" required value="Kolkata" style="width: 100%; padding: 10px; border-radius: var(--radius-sm);">
+            </div>
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 4px;">Address Type</label>
+              <select id="addr-type" style="width: 100%; padding: 10px; border-radius: var(--radius-sm);">
+                <option value="Home">Home</option>
+                <option value="Work">Work</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-primary">Save Address</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div>© 2026 CraveNest Technologies Inc. All rights reserved.</div>
+      <a href="index.html" style="color: white; font-weight: 700;">Home</a>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

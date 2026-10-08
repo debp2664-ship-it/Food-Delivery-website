@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Restaurants | CraveNest</title>
+  <meta name="description" content="Discover top restaurants and order delicious food delivered hot and fresh on CraveNest.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container navbar">
+      <button class="mobile-menu-toggle" id="open-drawer-btn" aria-label="Open Navigation Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+        <div class="brand-name">Crave<span>Nest</span></div>
+      </a>
+
+      <div class="location-selector" id="location-trigger">
+        <i class="fas fa-map-marker-alt"></i>
+        <span id="current-location-text">Salt Lake, Sector V</span>
+        <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+      </div>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="restaurants.html" class="nav-link active">Restaurants</a></li>
+          <li><a href="index.html#offers-section" class="nav-link">Offers</a></li>
+          <li><a href="orders.html" class="nav-link">Track Order</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="cart.html" class="cart-btn" id="nav-cart-btn">
+          <i class="fas fa-shopping-basket"></i>
+          <span>Cart</span>
+          <span class="cart-badge" id="nav-cart-badge">0</span>
+        </a>
+        <div id="navbar-auth-container"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-overlay" id="mobile-drawer-overlay"></div>
+  <aside class="mobile-nav-drawer" id="mobile-drawer">
+    <div class="drawer-header">
+      <div class="brand-logo">
+        <div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+        <div class="brand-name">Crave<span>Nest</span></div>
+      </div>
+      <button id="close-drawer-btn" style="font-size: 1.25rem;"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="drawer-links">
+      <li><a href="index.html" class="drawer-link"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="restaurants.html" class="drawer-link active"><i class="fas fa-store"></i> All Restaurants</a></li>
+      <li><a href="cart.html" class="drawer-link"><i class="fas fa-shopping-cart"></i> My Cart</a></li>
+      <li><a href="orders.html" class="drawer-link"><i class="fas fa-receipt"></i> Order Tracking</a></li>
+      <li><a href="profile.html" class="drawer-link"><i class="fas fa-user"></i> My Account</a></li>
+    </ul>
+  </aside>
+
+  <!-- Page Header Banner -->
+  <div style="background: white; border-bottom: 1px solid var(--border-color); padding: 28px 0;">
+    <div class="container flex-between" style="flex-wrap: wrap; gap: 16px;">
+      <div>
+        <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 4px;">Explore Restaurants</h1>
+        <p style="color: var(--text-secondary); font-size: 0.95rem;" id="results-count-text">Discover authentic dining experiences delivering to you</p>
+      </div>
+
+      <!-- Sorting Select -->
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <label for="sort-select" style="font-size: 0.9rem; font-weight: 700; color: var(--text-secondary);">Sort By:</label>
+        <select id="sort-select" style="padding: 10px 16px; border-radius: var(--radius-full); font-weight: 600; font-size: 0.88rem; background: var(--bg-subtle); border: 1px solid var(--border-color); cursor: pointer;">
+          <option value="rating">Top Rated (Default)</option>
+          <option value="popular">Most Popular</option>
+          <option value="deliveryTime">Fastest Delivery</option>
+          <option value="priceAsc">Price: Low to High</option>
+          <option value="priceDesc">Price: High to Low</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter & Listing Layout -->
+  <main class="container section-padding" style="padding-top: 32px;">
+    <!-- Horizontal Cuisine Filters Bar -->
+    <div style="display: flex; align-items: center; gap: 10px; overflow-x: auto; padding-bottom: 16px; margin-bottom: 24px; scrollbar-width: none;">
+      <button class="filter-cuisine-pill active" data-cuisine="All" style="padding: 8px 18px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.85rem; background: var(--secondary); color: white; border: none; white-space: nowrap;">All Cuisines</button>
+      <button class="filter-cuisine-pill" data-cuisine="Biryani" style="padding: 8px 18px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.85rem; background: white; border: 1px solid var(--border-color); color: var(--text-primary); white-space: nowrap;">Biryani</button>
+      <button class="filter-cuisine-pill" data-cuisine="Pizza" style="padding: 8px 18px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.85rem; background: white; border: 1px solid var(--border-color); color: var(--text-primary); white-space: nowrap;">Pizza</button>
+      <button class="filter-cuisine-pill" data-cuisine="Burger" style="padding: 8px 18px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.85rem; background: white; border: 1px solid var(--border-color); color: var(--text-primary); white-space: nowrap;">Burgers</button>
+      <button class="filter-cuisine-pill" data-cuisine="Chinese" style="padding: 8px 18px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.85rem; background: white; border: 1px solid var(--border-color); color: var(--text-primary); white-space: nowrap;">Chinese</button>
+      <button class="filter-cuisine-pill" data-cuisine="Bengali" style="padding: 8px 18px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.85rem; background: white; border: 1px solid var(--border-color); color: var(--text-primary); white-space: nowrap;">Bengali</button>
+      <button class="filter-cuisine-pill" data-cuisine="Indian" style="padding: 8px 18px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.85rem; background: white; border: 1px solid var(--border-color); color: var(--text-primary); white-space: nowrap;">North Indian</button>
+      <button class="filter-cuisine-pill" data-cuisine="Fast Food" style="padding: 8px 18px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.85rem; background: white; border: 1px solid var(--border-color); color: var(--text-primary); white-space: nowrap;">Fast Food</button>
+      <button class="filter-cuisine-pill" data-cuisine="Desserts" style="padding: 8px 18px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.85rem; background: white; border: 1px solid var(--border-color); color: var(--text-primary); white-space: nowrap;">Desserts</button>
+      <button class="filter-cuisine-pill" data-cuisine="Healthy Food" style="padding: 8px 18px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.85rem; background: white; border: 1px solid var(--border-color); color: var(--text-primary); white-space: nowrap;">Healthy & Bowls</button>
+    </div>
+
+    <!-- Quick Filter Control Row -->
+    <div style="background: white; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 30px;">
+      <!-- Search Input -->
+      <div style="display: flex; align-items: center; gap: 10px; background: var(--bg-subtle); padding: 8px 16px; border-radius: var(--radius-full); flex: 1; min-width: 240px; border: 1px solid var(--border-color);">
+        <i class="fas fa-search" style="color: var(--primary);"></i>
+        <input type="text" id="filter-search-input" placeholder="Search by restaurant name or dish..." style="border: none; background: transparent; width: 100%; font-size: 0.9rem;">
+      </div>
+
+      <!-- Toggles & Radios -->
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px; font-size: 0.88rem; font-weight: 600;">
+        <!-- Pure Veg Toggle -->
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" id="filter-veg-only" style="width: 16px; height: 16px; accent-color: var(--veg-color);">
+          <span style="color: var(--veg-color);"><i class="fas fa-leaf"></i> Pure Veg Only</span>
+        </label>
+
+        <!-- Has Offers Toggle -->
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" id="filter-has-offers" style="width: 16px; height: 16px; accent-color: var(--primary);">
+          <span><i class="fas fa-tags" style="color: var(--primary);"></i> With Offers</span>
+        </label>
+
+        <!-- Minimum Rating -->
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="color: var(--text-secondary);">Rating:</span>
+          <label style="cursor: pointer; display: flex; align-items: center; gap: 4px;">
+            <input type="radio" name="rating-filter" value="" checked> Any
+          </label>
+          <label style="cursor: pointer; display: flex; align-items: center; gap: 4px;">
+            <input type="radio" name="rating-filter" value="4.0"> 4.0+ ★
+          </label>
+          <label style="cursor: pointer; display: flex; align-items: center; gap: 4px;">
+            <input type="radio" name="rating-filter" value="4.5"> 4.5+ ★
+          </label>
+        </div>
+
+        <button id="clear-filters-btn" style="color: var(--accent-rose); font-weight: 700; cursor: pointer;">
+          <i class="fas fa-redo-alt"></i> Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Restaurants Cards Grid -->
+    <div class="restaurants-grid" id="restaurants-list-container">
+      <!-- Loaded dynamically via restaurants.js -->
+    </div>
+  </main>
+
+  <!-- Location Picker Modal -->
+  <div class="modal-backdrop" id="location-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-map-marker-alt" style="color: var(--primary);"></i> Select Delivery Location</h3>
+        <button class="modal-close-btn" id="close-location-modal"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="location-chip-option" data-location="Salt Lake, Sector V" style="padding: 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md); cursor: pointer; text-align: center; font-weight: 700;">Salt Lake, Sector V</div>
+          <div class="location-chip-option" data-location="Park Street" style="padding: 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md); cursor: pointer; text-align: center; font-weight: 700;">Park Street</div>
+          <div class="location-chip-option" data-location="New Town Action Area 1" style="padding: 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md); cursor: pointer; text-align: center; font-weight: 700;">New Town</div>
+          <div class="location-chip-option" data-location="Ballygunge" style="padding: 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md); cursor: pointer; text-align: center; font-weight: 700;">Ballygunge</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div>© 2026 CraveNest Technologies Inc. All rights reserved.</div>
+      <a href="index.html" style="color: white; font-weight: 700;">Back to Home</a>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/restaurants.js"></script>
+</body>
+</html>

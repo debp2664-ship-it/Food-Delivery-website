@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | CraveNest</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body style="background: linear-gradient(135deg, #FFF5F2 0%, #F1F5F9 100%); min-height: 100vh; display: flex; flex-direction: column;">
+
+  <!-- Header Mini -->
+  <header style="padding: 20px 0;">
+    <div class="container flex-between">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+        <div class="brand-name">Crave<span>Nest</span></div>
+      </a>
+      <a href="index.html" style="font-weight: 700; font-size: 0.9rem; color: var(--text-secondary);">
+        <i class="fas fa-arrow-left" style="margin-right: 6px;"></i> Back to Home
+      </a>
+    </div>
+  </header>
+
+  <!-- Auth Card Center -->
+  <main class="container flex-center" style="flex: 1; padding: 40px 20px;">
+    <div style="background: white; border-radius: var(--radius-xl); border: 1px solid var(--border-color); box-shadow: var(--shadow-xl); max-width: 480px; width: 100%; padding: 36px 32px;">
+      <!-- Title -->
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h1 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 6px;">Create Account</h1>
+        <p style="font-size: 0.9rem; color: var(--text-secondary);">Join CraveNest and enjoy instant doorstep food delivery</p>
+      </div>
+
+      <!-- Register Form -->
+      <form id="register-form" style="display: flex; flex-direction: column; gap: 16px;">
+        <div>
+          <label for="reg-name" style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); display: block; margin-bottom: 6px;">Full Name *</label>
+          <div style="position: relative;">
+            <i class="far fa-user" style="position: absolute; left: 14px; top: 14px; color: var(--text-muted);"></i>
+            <input type="text" id="reg-name" required placeholder="Aarav Sharma" style="width: 100%; padding: 12px 14px 12px 40px; border-radius: var(--radius-md); font-size: 0.92rem;">
+          </div>
+        </div>
+
+        <div>
+          <label for="reg-email" style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); display: block; margin-bottom: 6px;">Email Address *</label>
+          <div style="position: relative;">
+            <i class="far fa-envelope" style="position: absolute; left: 14px; top: 14px; color: var(--text-muted);"></i>
+            <input type="email" id="reg-email" required placeholder="aarav@example.com" style="width: 100%; padding: 12px 14px 12px 40px; border-radius: var(--radius-md); font-size: 0.92rem;">
+          </div>
+        </div>
+
+        <div>
+          <label for="reg-phone" style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); display: block; margin-bottom: 6px;">Phone Number</label>
+          <div style="position: relative;">
+            <i class="fas fa-phone-alt" style="position: absolute; left: 14px; top: 14px; color: var(--text-muted);"></i>
+            <input type="tel" id="reg-phone" placeholder="+91 98301 23456" style="width: 100%; padding: 12px 14px 12px 40px; border-radius: var(--radius-md); font-size: 0.92rem;">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label for="reg-password" style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); display: block; margin-bottom: 6px;">Password *</label>
+            <input type="password" id="reg-password" required minlength="6" placeholder="At least 6 chars" style="width: 100%; padding: 12px; border-radius: var(--radius-md); font-size: 0.92rem;">
+          </div>
+          <div>
+            <label for="reg-confirm-password" style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); display: block; margin-bottom: 6px;">Confirm *</label>
+            <input type="password" id="reg-confirm-password" required placeholder="Re-enter password" style="width: 100%; padding: 12px; border-radius: var(--radius-md); font-size: 0.92rem;">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 13px; font-size: 0.95rem; border-radius: var(--radius-md); margin-top: 8px;">
+          Create Account
+        </button>
+      </form>
+
+      <!-- Switch to Login -->
+      <div style="text-align: center; margin-top: 24px; font-size: 0.88rem; color: var(--text-secondary);">
+        Already have an account? 
+        <a href="login.html" style="color: var(--primary); font-weight: 700;">Sign In</a>
+      </div>
+    </div>
+  </main>
+
+  <footer style="text-align: center; padding: 20px; font-size: 0.82rem; color: var(--text-muted);">
+    © 2026 CraveNest. Secure User Registration.
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

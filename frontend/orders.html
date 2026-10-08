@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Order & Order History | CraveNest</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container navbar">
+      <button class="mobile-menu-toggle" id="open-drawer-btn" aria-label="Open Navigation Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+        <div class="brand-name">Crave<span>Nest</span></div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="restaurants.html" class="nav-link">Restaurants</a></li>
+          <li><a href="cart.html" class="nav-link">Cart</a></li>
+          <li><a href="orders.html" class="nav-link active">Orders</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="cart.html" class="cart-btn" id="nav-cart-btn">
+          <i class="fas fa-shopping-basket"></i>
+          <span>Cart</span>
+          <span class="cart-badge" id="nav-cart-badge">0</span>
+        </a>
+        <div id="navbar-auth-container"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-overlay" id="mobile-drawer-overlay"></div>
+  <aside class="mobile-nav-drawer" id="mobile-drawer">
+    <div class="drawer-header">
+      <div class="brand-logo">
+        <div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+        <div class="brand-name">Crave<span>Nest</span></div>
+      </div>
+      <button id="close-drawer-btn"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="drawer-links">
+      <li><a href="index.html" class="drawer-link"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="restaurants.html" class="drawer-link"><i class="fas fa-store"></i> Restaurants</a></li>
+      <li><a href="cart.html" class="drawer-link"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      <li><a href="orders.html" class="drawer-link active"><i class="fas fa-receipt"></i> Orders</a></li>
+      <li><a href="profile.html" class="drawer-link"><i class="fas fa-user"></i> Profile</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Orders Page Container -->
+  <main class="container section-padding" style="padding-top: 32px;">
+    <!-- Active Order Live Tracker Section -->
+    <section id="active-tracking-section" style="margin-bottom: 48px;">
+      <div class="section-header flex-between">
+        <div>
+          <span class="subtitle">Live Order Dispatch</span>
+          <h1 class="title">Tracking Order #<span id="tracking-order-id">Loading...</span></h1>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button id="refresh-tracking-btn" class="btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;">
+            <i class="fas fa-sync-alt"></i> Refresh Status
+          </button>
+          <button id="cancel-order-btn" class="btn-secondary" style="display: none; color: var(--accent-rose); border-color: #FECACA; padding: 8px 16px; font-size: 0.85rem;">
+            <i class="fas fa-times-circle"></i> Cancel Order
+          </button>
+        </div>
+      </div>
+
+      <div style="background: white; border-radius: var(--radius-xl); border: 1px solid var(--border-color); padding: 32px; box-shadow: var(--shadow-md);">
+        <!-- Stepper Progress Container -->
+        <div id="tracking-steps-container">
+          <!-- Populated by orders.js -->
+        </div>
+
+        <!-- Meta Details Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; background: var(--bg-subtle); padding: 20px; border-radius: var(--radius-lg); margin-top: 24px;">
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Restaurant</div>
+            <div style="font-weight: 800; font-size: 1.05rem;" id="tracking-rest-name">-</div>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Estimated Arrival</div>
+            <div style="font-weight: 800; font-size: 1.05rem; color: var(--primary);" id="tracking-est-time">-</div>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Total Paid</div>
+            <div style="font-weight: 800; font-size: 1.05rem;" id="tracking-total-amount">-</div>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Delivering To</div>
+            <div style="font-size: 0.85rem; font-weight: 600;" id="tracking-delivery-addr">-</div>
+          </div>
+        </div>
+
+        <!-- Ordered Items Summary Accordion -->
+        <div style="margin-top: 24px; border-top: 1px solid var(--border-light); padding-top: 18px;">
+          <h4 style="font-size: 0.98rem; font-weight: 700; margin-bottom: 10px;">Ordered Items</h4>
+          <div id="tracking-items-list">
+            <!-- Populated by orders.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Past Orders History Section -->
+    <section>
+      <div class="section-header">
+        <span class="subtitle">History</span>
+        <h2 class="title">My Past Orders</h2>
+        <p class="desc">Review and reorder your favorite meals anytime.</p>
+      </div>
+
+      <div id="order-history-list-container">
+        <!-- Populated via orders.js -->
+        <div class="skeleton-card" style="height: 140px; margin-bottom: 16px;"><div class="skeleton-shimmer"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div>© 2026 CraveNest Technologies Inc. All rights reserved.</div>
+      <a href="index.html" style="color: white; font-weight: 700;">Home</a>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/orders.js"></script>
+</body>
+</html>

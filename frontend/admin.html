@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Operations Center | CraveNest</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <a href="index.html" class="brand-logo">
+          <div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+          <div class="brand-name">Crave<span>Admin</span></div>
+        </a>
+      </div>
+
+      <ul class="admin-nav">
+        <li class="admin-nav-item active" data-tab="admin-tab-overview">
+          <i class="fas fa-chart-line"></i> Dashboard Overview
+        </li>
+        <li class="admin-nav-item" data-tab="admin-tab-orders">
+          <i class="fas fa-receipt"></i> Manage Orders
+        </li>
+        <li class="admin-nav-item" data-tab="admin-tab-restaurants">
+          <i class="fas fa-store"></i> Manage Restaurants
+        </li>
+        <li class="admin-nav-item" data-tab="admin-tab-foods">
+          <i class="fas fa-utensils"></i> Manage Menu Foods
+        </li>
+        <li class="admin-nav-item" data-tab="admin-tab-coupons">
+          <i class="fas fa-ticket-alt"></i> Manage Coupons
+        </li>
+        <li class="admin-nav-item" data-tab="admin-tab-users">
+          <i class="fas fa-users"></i> Manage Users
+        </li>
+      </ul>
+
+      <div class="admin-sidebar-footer">
+        <div class="admin-user-pill">
+          <div class="admin-avatar">A</div>
+          <div class="admin-user-info">
+            <div class="admin-name" id="admin-sidebar-name">Admin Master</div>
+            <div class="admin-badge">Super Admin</div>
+          </div>
+        </div>
+        <button class="logout-btn-action" style="color: #94A3B8; font-size: 1.1rem;" title="Logout">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="admin-main">
+      <!-- Topbar -->
+      <header class="admin-topbar">
+        <h2 class="admin-topbar-title" id="admin-active-tab-title">Dashboard Overview</h2>
+        <div class="admin-topbar-actions">
+          <a href="index.html" class="btn-secondary" style="padding: 7px 16px; font-size: 0.85rem;" target="_blank">
+            <i class="fas fa-external-link-alt"></i> View Live Site
+          </a>
+          <button class="btn-primary" id="open-add-restaurant-modal" style="padding: 7px 16px; font-size: 0.85rem;">
+            <i class="fas fa-plus"></i> New Restaurant
+          </button>
+        </div>
+      </header>
+
+      <div class="admin-content-body">
+        <!-- 1. Overview Tab -->
+        <div id="admin-tab-overview" class="admin-tab-pane">
+          <!-- Metric Stat Cards -->
+          <div class="stats-cards-grid">
+            <div class="stat-card">
+              <div class="stat-card-icon green"><i class="fas fa-indian-rupee-sign"></i></div>
+              <div class="stat-card-details">
+                <div class="stat-card-label">Total Revenue</div>
+                <div class="stat-card-value" id="stat-total-revenue">₹0</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-icon blue"><i class="fas fa-shopping-bag"></i></div>
+              <div class="stat-card-details">
+                <div class="stat-card-label">Total Orders</div>
+                <div class="stat-card-value" id="stat-total-orders">0</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-icon orange"><i class="fas fa-calendar-day"></i></div>
+              <div class="stat-card-details">
+                <div class="stat-card-label">Today's Orders</div>
+                <div class="stat-card-value" id="stat-today-orders">0</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-icon purple"><i class="fas fa-hourglass-half"></i></div>
+              <div class="stat-card-details">
+                <div class="stat-card-label">Pending Orders</div>
+                <div class="stat-card-value" id="stat-pending-orders">0</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-icon orange"><i class="fas fa-store"></i></div>
+              <div class="stat-card-details">
+                <div class="stat-card-label">Active Restaurants</div>
+                <div class="stat-card-value" id="stat-total-restaurants">0</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-icon green"><i class="fas fa-users"></i></div>
+              <div class="stat-card-details">
+                <div class="stat-card-label">Registered Users</div>
+                <div class="stat-card-value" id="stat-total-users">0</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action Notice -->
+          <div style="background: white; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px;">
+            <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 8px;">Welcome to CraveNest Control Center</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.5;">
+              From here, you have real-time administrative access to update live order delivery stages, add/edit restaurants, modify menu items, configure discount coupons, and manage customer accounts.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2. Manage Orders Tab -->
+        <div id="admin-tab-orders" class="admin-tab-pane" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title">All Customer Orders</h3>
+              <div style="display: flex; gap: 12px; align-items: center;">
+                <select id="admin-order-status-filter" style="padding: 7px 12px; border-radius: var(--radius-full); font-size: 0.85rem; border: 1px solid var(--border-color);">
+                  <option value="All">All Statuses</option>
+                  <option value="Order Placed">Order Placed</option>
+                  <option value="Restaurant Accepted">Restaurant Accepted</option>
+                  <option value="Food Preparing">Food Preparing</option>
+                  <option value="Out for Delivery">Out for Delivery</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+                <input type="text" id="admin-order-search" class="admin-search-input" placeholder="Search order ID, user...">
+              </div>
+            </div>
+            <div class="admin-table-wrapper">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Restaurant</th>
+                    <th>Total</th>
+                    <th>Status (Live Update)</th>
+                    <th>Date & Time</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-orders-table-body">
+                  <!-- Populated via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Manage Restaurants Tab -->
+        <div id="admin-tab-restaurants" class="admin-tab-pane" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title">Restaurants Management</h3>
+              <button class="btn-primary" id="open-add-restaurant-modal-btn2" style="padding: 7px 16px; font-size: 0.85rem;">
+                + Add Restaurant
+              </button>
+            </div>
+            <div class="admin-table-wrapper">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Cuisines</th>
+                    <th>Rating</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-restaurants-table-body">
+                  <!-- Populated via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Manage Food Tab -->
+        <div id="admin-tab-foods" class="admin-tab-pane" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title">Food Items & Dishes</h3>
+              <button class="btn-primary" id="open-add-food-modal" style="padding: 7px 16px; font-size: 0.85rem;">
+                + Add Food Item
+              </button>
+            </div>
+            <div class="admin-table-wrapper">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Dish Name</th>
+                    <th>Restaurant</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Availability</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-foods-table-body">
+                  <!-- Populated via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Manage Coupons Tab -->
+        <div id="admin-tab-coupons" class="admin-tab-pane" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title">Promo Coupons & Discounts</h3>
+              <button class="btn-primary" id="open-add-coupon-modal" style="padding: 7px 16px; font-size: 0.85rem;">
+                + Create Coupon
+              </button>
+            </div>
+            <div class="admin-table-wrapper">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Coupon Code</th>
+                    <th>Description</th>
+                    <th>Discount</th>
+                    <th>Min Order</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-coupons-table-body">
+                  <!-- Populated via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Manage Users Tab -->
+        <div id="admin-tab-users" class="admin-tab-pane" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title">User Accounts</h3>
+              <input type="text" id="admin-user-search" class="admin-search-input" placeholder="Search by name, email...">
+            </div>
+            <div class="admin-table-wrapper">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-users-table-body">
+                  <!-- Populated via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: View Order Details -->
+  <div class="modal-backdrop" id="admin-modal-view-order">
+    <div class="modal-box" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Order Information</h3>
+        <button class="modal-close-btn"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body" id="admin-order-modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary modal-cancel-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add/Edit Restaurant -->
+  <div class="modal-backdrop" id="admin-modal-restaurant">
+    <div class="modal-box" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="restaurant-modal-title">Add Restaurant</h3>
+        <button class="modal-close-btn"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="restaurant-modal-form">
+        <input type="hidden" id="restaurant-form-id">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 700;">Restaurant Name *</label>
+            <input type="text" id="rest-form-name" required style="width: 100%; padding: 8px;">
+          </div>
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 700;">Description *</label>
+            <textarea id="rest-form-desc" required rows="2" style="width: 100%; padding: 8px;"></textarea>
+          </div>
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 700;">Image URL</label>
+            <input type="url" id="rest-form-image" placeholder="https://..." style="width: 100%; padding: 8px;">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Cuisines (Comma separated) *</label>
+              <input type="text" id="rest-form-cuisine" placeholder="Biryani, Indian" required style="width: 100%; padding: 8px;">
+            </div>
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Area / Locality *</label>
+              <input type="text" id="rest-form-area" placeholder="Park Street" required style="width: 100%; padding: 8px;">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Rating</label>
+              <input type="number" id="rest-form-rating" step="0.1" min="1" max="5" value="4.5" style="width: 100%; padding: 8px;">
+            </div>
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Delivery Fee (₹)</label>
+              <input type="number" id="rest-form-fee" value="30" style="width: 100%; padding: 8px;">
+            </div>
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Min Order (₹)</label>
+              <input type="number" id="rest-form-min" value="150" style="width: 100%; padding: 8px;">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Delivery Time</label>
+              <input type="text" id="rest-form-time" value="25-35 mins" style="width: 100%; padding: 8px;">
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 18px;">
+              <input type="checkbox" id="rest-form-isveg" style="width: 18px; height: 18px;">
+              <label for="rest-form-isveg" style="font-weight: 700; font-size: 0.85rem; color: var(--veg-color);">Pure Veg Kitchen</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-primary">Save Restaurant</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Add/Edit Food Item -->
+  <div class="modal-backdrop" id="admin-modal-food">
+    <div class="modal-box" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="food-modal-title">Add Food Item</h3>
+        <button class="modal-close-btn"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="food-modal-form">
+        <input type="hidden" id="food-form-id">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 700;">Select Restaurant *</label>
+            <select id="food-form-restaurant" required style="width: 100%; padding: 8px;"></select>
+          </div>
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 700;">Food Name *</label>
+            <input type="text" id="food-form-name" required style="width: 100%; padding: 8px;">
+          </div>
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 700;">Description</label>
+            <textarea id="food-form-desc" rows="2" style="width: 100%; padding: 8px;"></textarea>
+          </div>
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 700;">Image URL</label>
+            <input type="url" id="food-form-image" placeholder="https://..." style="width: 100%; padding: 8px;">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Category *</label>
+              <select id="food-form-category" style="width: 100%; padding: 8px;">
+                <option value="Biryani">Biryani</option>
+                <option value="Pizza">Pizza</option>
+                <option value="Burger">Burger</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Indian">Indian</option>
+                <option value="Bengali">Bengali</option>
+                <option value="Fast Food">Fast Food</option>
+                <option value="Desserts">Desserts</option>
+                <option value="Beverages">Beverages</option>
+                <option value="Healthy Food">Healthy Food</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Menu Section</label>
+              <select id="food-form-subcategory" style="width: 100%; padding: 8px;">
+                <option value="Recommended">Recommended</option>
+                <option value="Starters">Starters</option>
+                <option value="Main Course">Main Course</option>
+                <option value="Rice">Rice</option>
+                <option value="Biryani">Biryani</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Drinks">Drinks</option>
+                <option value="Desserts">Desserts</option>
+              </select>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Selling Price (₹) *</label>
+              <input type="number" id="food-form-price" required style="width: 100%; padding: 8px;">
+            </div>
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Original / MRP Price (₹)</label>
+              <input type="number" id="food-form-orig-price" style="width: 100%; padding: 8px;">
+            </div>
+          </div>
+          <div style="display: flex; gap: 24px;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="checkbox" id="food-form-isveg" style="width: 16px; height: 16px;">
+              <span style="font-weight: 700; font-size: 0.85rem; color: var(--veg-color);">Vegetarian Item</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="checkbox" id="food-form-available" checked style="width: 16px; height: 16px;">
+              <span style="font-weight: 700; font-size: 0.85rem;">Currently Available in Kitchen</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-primary">Save Food</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Add Coupon -->
+  <div class="modal-backdrop" id="admin-modal-coupon">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Create Promo Coupon</h3>
+        <button class="modal-close-btn"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="coupon-modal-form">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 12px;">
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 700;">Coupon Code *</label>
+            <input type="text" id="coupon-form-code" placeholder="e.g. MONSOON30" required style="width: 100%; padding: 8px; text-transform: uppercase;">
+          </div>
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 700;">Description *</label>
+            <input type="text" id="coupon-form-desc" placeholder="30% OFF on all gourmet meals" required style="width: 100%; padding: 8px;">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Discount Type</label>
+              <select id="coupon-form-type" style="width: 100%; padding: 8px;">
+                <option value="percentage">Percentage (%)</option>
+                <option value="flat">Flat Amount (₹)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Discount Value *</label>
+              <input type="number" id="coupon-form-val" required style="width: 100%; padding: 8px;">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Min Order (₹)</label>
+              <input type="number" id="coupon-form-min" value="0" style="width: 100%; padding: 8px;">
+            </div>
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700;">Max Discount (₹)</label>
+              <input type="number" id="coupon-form-max" value="0" style="width: 100%; padding: 8px;">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-primary">Create Coupon</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    // Wire secondary modal trigger
+    document.getElementById('open-add-restaurant-modal-btn2')?.addEventListener('click', () => {
+      document.getElementById('open-add-restaurant-modal')?.click();
+    });
+  </script>
+</body>
+</html>

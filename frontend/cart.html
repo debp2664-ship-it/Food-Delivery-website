@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart | CraveNest</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container navbar">
+      <button class="mobile-menu-toggle" id="open-drawer-btn" aria-label="Open Navigation Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+        <div class="brand-name">Crave<span>Nest</span></div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="restaurants.html" class="nav-link">Restaurants</a></li>
+          <li><a href="cart.html" class="nav-link active">Cart</a></li>
+          <li><a href="orders.html" class="nav-link">Orders</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <div id="navbar-auth-container"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-overlay" id="mobile-drawer-overlay"></div>
+  <aside class="mobile-nav-drawer" id="mobile-drawer">
+    <div class="drawer-header">
+      <div class="brand-logo">
+        <div class="brand-icon"><i class="fas fa-fire-flame-curved"></i></div>
+        <div class="brand-name">Crave<span>Nest</span></div>
+      </div>
+      <button id="close-drawer-btn"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="drawer-links">
+      <li><a href="index.html" class="drawer-link"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="restaurants.html" class="drawer-link"><i class="fas fa-store"></i> Restaurants</a></li>
+      <li><a href="cart.html" class="drawer-link active"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      <li><a href="orders.html" class="drawer-link"><i class="fas fa-receipt"></i> Orders</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Cart Container -->
+  <main class="container section-padding" style="padding-top: 36px;">
+    <div class="section-header">
+      <span class="subtitle">Review Your Order</span>
+      <h1 class="title">My Food Basket</h1>
+    </div>
+
+    <!-- Empty Cart State -->
+    <div id="cart-empty-state" class="empty-state" style="display: none; background: white; border-radius: var(--radius-xl); border: 1px solid var(--border-color); padding: 60px 24px;">
+      <div class="empty-state-icon"><i class="fas fa-shopping-basket"></i></div>
+      <h2 class="empty-state-title">Your Cart is Currently Empty</h2>
+      <p class="empty-state-desc">Good food is always cooking! Add fresh meals from top-rated restaurants near you.</p>
+      <a href="restaurants.html" class="btn-primary" style="margin: 0 auto;">Explore Restaurants</a>
+    </div>
+
+    <!-- Cart Layout with Items & Bill Details -->
+    <div id="cart-content-grid" style="display: grid; grid-template-columns: 1.35fr 0.85fr; gap: 32px; align-items: start;">
+      <!-- Left: Cart Items List -->
+      <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); overflow: hidden;">
+        <div style="padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <h3 style="font-size: 1.15rem; font-weight: 800;" id="cart-restaurant-title">Order Items</h3>
+            <span style="font-size: 0.82rem; color: var(--text-muted);" id="cart-restaurant-subtitle">Freshly prepared on demand</span>
+          </div>
+          <button id="clear-all-cart-btn" style="color: var(--accent-rose); font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+            <i class="far fa-trash-alt"></i> Clear Basket
+          </button>
+        </div>
+
+        <!-- Items Rows -->
+        <div id="cart-items-container" style="padding: 12px 24px;">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Add More Items CTA -->
+        <div style="padding: 16px 24px; background: var(--bg-subtle); border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-size: 0.88rem; color: var(--text-secondary); font-weight: 600;">Want to add something more?</span>
+          <a href="restaurants.html" style="color: var(--primary); font-weight: 700; font-size: 0.88rem;">+ Add More Dishes</a>
+        </div>
+      </div>
+
+      <!-- Right: Bill Details & Coupons -->
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <!-- Coupon Card -->
+        <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 20px; box-shadow: var(--shadow-sm);">
+          <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-ticket-alt" style="color: var(--primary);"></i> Apply Coupon Code
+          </h4>
+          <form id="apply-coupon-form" style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <input type="text" id="coupon-code-input" placeholder="Enter coupon (e.g. WELCOME50)" style="flex: 1; padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.88rem; text-transform: uppercase; font-weight: 700;">
+            <button type="submit" class="btn-primary" style="padding: 10px 18px; font-size: 0.88rem;">Apply</button>
+          </form>
+
+          <!-- Active applied coupon badge -->
+          <div id="applied-coupon-pill" style="display: none; align-items: center; justify-content: space-between; background: #ECFDF5; border: 1px solid #10B981; border-radius: var(--radius-md); padding: 8px 12px; font-size: 0.85rem; color: #065F46;">
+            <div>
+              <strong id="applied-coupon-name">WELCOME50</strong> applied (<span id="applied-coupon-savings">Saved ₹50</span>)
+            </div>
+            <button id="remove-coupon-btn" style="color: #DC2626; font-weight: 700; font-size: 0.8rem; cursor: pointer;">Remove</button>
+          </div>
+
+          <!-- Quick click available coupons -->
+          <div style="margin-top: 14px; font-size: 0.8rem; color: var(--text-muted);">
+            Available: 
+            <span class="quick-coupon-tag" data-code="WELCOME50" style="color: var(--primary); font-weight: 700; cursor: pointer; text-decoration: underline; margin-right: 6px;">WELCOME50</span>
+            <span class="quick-coupon-tag" data-code="FEAST100" style="color: var(--primary); font-weight: 700; cursor: pointer; text-decoration: underline; margin-right: 6px;">FEAST100</span>
+            <span class="quick-coupon-tag" data-code="FREEDEL" style="color: var(--primary); font-weight: 700; cursor: pointer; text-decoration: underline;">FREEDEL</span>
+          </div>
+        </div>
+
+        <!-- Bill Details Card -->
+        <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 24px; box-shadow: var(--shadow-sm);">
+          <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 16px;">Bill Details</h4>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Item Total</span>
+              <span id="bill-subtotal" style="font-weight: 700; color: var(--text-primary);">₹0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Delivery Partner Fee</span>
+              <span id="bill-delivery-fee" style="font-weight: 700; color: var(--text-primary);">₹30</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Government Taxes & Restaurant Charges (5% GST)</span>
+              <span id="bill-tax" style="font-weight: 700; color: var(--text-primary);">₹0</span>
+            </div>
+            <div id="bill-discount-row" style="display: none; justify-content: space-between; color: var(--accent-emerald); font-weight: 700;">
+              <span>Coupon Discount</span>
+              <span id="bill-discount">- ₹0</span>
+            </div>
+          </div>
+
+          <!-- Final Total Row -->
+          <div style="display: flex; justify-content: space-between; align-items: baseline; font-weight: 800; font-size: 1.35rem; color: var(--text-primary); margin-bottom: 20px;">
+            <span>To Pay</span>
+            <span id="bill-final-total" style="color: var(--primary);">₹0</span>
+          </div>
+
+          <!-- Checkout CTA -->
+          <a href="checkout.html" class="btn-primary" id="proceed-checkout-btn" style="width: 100%; padding: 14px; font-size: 1rem; border-radius: var(--radius-md);">
+            Proceed to Checkout <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div>© 2026 CraveNest Technologies Inc. All rights reserved.</div>
+      <a href="restaurants.html" style="color: white; font-weight: 700;">Keep Browsing</a>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCartPage();
+
+      // Clear all
+      document.getElementById('clear-all-cart-btn')?.addEventListener('click', () => {
+        if (confirm('Are you sure you want to clear your cart?')) {
+          Cart.clearCart();
+          renderCartPage();
+        }
+      });
+
+      // Apply coupon form
+      document.getElementById('apply-coupon-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const code = document.getElementById('coupon-code-input').value.trim();
+        if (code) {
+          const ok = await Cart.applyCoupon(code);
+          if (ok) renderCartPage();
+        }
+      });
+
+      // Quick tags
+      document.querySelectorAll('.quick-coupon-tag').forEach(tag => {
+        tag.addEventListener('click', () => {
+          document.getElementById('coupon-code-input').value = tag.dataset.code;
+          document.getElementById('apply-coupon-form').dispatchEvent(new Event('submit'));
+        });
+      });
+
+      // Remove coupon
+      document.getElementById('remove-coupon-btn')?.addEventListener('click', () => {
+        Cart.removeCoupon();
+        renderCartPage();
+      });
+    });
+
+    function renderCartPage() {
+      const cart = Cart.getCart();
+      const emptyState = document.getElementById('cart-empty-state');
+      const contentGrid = document.getElementById('cart-content-grid');
+      const itemsContainer = document.getElementById('cart-items-container');
+
+      if (cart.items.length === 0) {
+        if (emptyState) emptyState.style.display = 'block';
+        if (contentGrid) contentGrid.style.display = 'none';
+        return;
+      }
+
+      if (emptyState) emptyState.style.display = 'none';
+      if (contentGrid) contentGrid.style.display = 'grid';
+
+      // Restaurant title
+      document.getElementById('cart-restaurant-title').textContent = cart.restaurantName || 'Order Items';
+
+      // Render items
+      itemsContainer.innerHTML = cart.items.map(item => `
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid var(--border-light); gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <img src="${item.image}" alt="${item.name}" style="width: 54px; height: 54px; border-radius: 10px; object-fit: cover;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span class="diet-indicator ${item.isVeg ? 'veg' : 'nonveg'}" style="width: 14px; height: 14px;"></span>
+                <span style="font-weight: 700; font-size: 0.95rem;">${item.name}</span>
+              </div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">₹${item.price} each</div>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 18px;">
+            <div class="qty-control-wrap">
+              <button class="qty-btn cart-minus-btn" data-id="${item.food}">−</button>
+              <span class="qty-display">${item.quantity}</span>
+              <button class="qty-btn cart-plus-btn" data-id="${item.food}">+</button>
+            </div>
+            <div style="font-family: 'Outfit'; font-weight: 800; font-size: 1.05rem; min-width: 60px; text-align: right;">
+              ₹${item.price * item.quantity}
+            </div>
+            <button class="cart-remove-item-btn" data-id="${item.food}" style="color: var(--text-muted); font-size: 0.9rem;" title="Remove item">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      // Wire item quantity buttons
+      itemsContainer.querySelectorAll('.cart-plus-btn').forEach(b => {
+        b.onclick = () => { Cart.updateQuantity(b.dataset.id, 1); renderCartPage(); };
+      });
+      itemsContainer.querySelectorAll('.cart-minus-btn').forEach(b => {
+        b.onclick = () => { Cart.updateQuantity(b.dataset.id, -1); renderCartPage(); };
+      });
+      itemsContainer.querySelectorAll('.cart-remove-item-btn').forEach(b => {
+        b.onclick = () => { Cart.removeItem(b.dataset.id); renderCartPage(); };
+      });
+
+      // Update Bill Details
+      const totals = Cart.calculateTotals();
+      document.getElementById('bill-subtotal').textContent = `₹${totals.subtotal}`;
+      document.getElementById('bill-delivery-fee').textContent = totals.deliveryFee === 0 ? 'FREE' : `₹${totals.deliveryFee}`;
+      document.getElementById('bill-tax').textContent = `₹${totals.tax}`;
+      document.getElementById('bill-final-total').textContent = `₹${totals.total}`;
+
+      // Coupon pill display
+      const couponPill = document.getElementById('applied-coupon-pill');
+      const discountRow = document.getElementById('bill-discount-row');
+      if (cart.coupon && totals.discount > 0) {
+        couponPill.style.display = 'flex';
+        document.getElementById('applied-coupon-name').textContent = cart.coupon.code;
+        document.getElementById('applied-coupon-savings').textContent = `Saved ₹${totals.discount}`;
+        discountRow.style.display = 'flex';
+        document.getElementById('bill-discount').textContent = `- ₹${totals.discount}`;
+      } else {
+        couponPill.style.display = 'none';
+        discountRow.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
